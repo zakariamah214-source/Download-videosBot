@@ -1,1 +1,407 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>تحميل فيديوهات بدون علامة مائية | FFMG Bot</title>
+    <!-- Font Awesome 6 (مجاني للأيقونات) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Tajawal و Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            background: linear-gradient(135deg, #0B1120 0%, #0F172A 100%);
+            font-family: 'Tajawal', 'Inter', system-ui, sans-serif;
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+            color: #F1F5F9;
+        }
+
+        /* حاوية رئيسية */
+        .main-wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* بطاقة البوت والترويسة */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .badge {
+            background: rgba(37, 99, 235, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #93C5FD;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            background: linear-gradient(to left, #FFFFFF, #A5F3FC, #7AA2F7);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            font-size: 1.2rem;
+            color: #CBD5E1;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+        }
+
+        /* زر البوت المركزي (قابل للنقر) */
+        .bot-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(12px);
+            border-radius: 80px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.5rem 1.8rem 0.5rem 2rem;
+            border: 1px solid rgba(96, 165, 250, 0.5);
+            transition: all 0.25s ease;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .bot-card:hover {
+            background: rgba(37, 99, 235, 0.4);
+            border-color: #60A5FA;
+            transform: translateY(-3px);
+            box-shadow: 0 18px 30px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .bot-icon {
+            font-size: 2.4rem;
+            filter: drop-shadow(0 0 4px #3B82F6);
+        }
+
+        .bot-name {
+            font-size: 1.7rem;
+            font-weight: 700;
+            font-family: monospace;
+            letter-spacing: 1px;
+            color: #BAE6FD;
+        }
+
+        .bot-hint {
+            font-size: 0.8rem;
+            background: #0F172A;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            margin-right: 0.5rem;
+            color: #7AA2F7;
+        }
+
+        /* شبكة المنصات : كل منصة بها صورة (أيقونة ضخمة) واسم */
+        .platforms-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1.5rem 0;
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .platforms-title i {
+            font-size: 2rem;
+            color: #FBBF24;
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 1.6rem;
+            margin: 2rem 0 2.5rem;
+        }
+
+        /* بطاقة المنصة (اسم + صورة) */
+        .platform-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            padding: 1.5rem 0.8rem;
+            text-align: center;
+            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            cursor: default;
+        }
+
+        .platform-card:hover {
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateY(-6px);
+            border-color: #3B82F6;
+            box-shadow: 0 12px 20px -12px #0F172A;
+        }
+
+        /* صورة المنصة (أيقونة كبيرة ملوّنة) */
+        .platform-img {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .platform-card:hover .platform-img {
+            transform: scale(1.08);
+        }
+
+        .platform-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #E2E8F0, #CBD5E1);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.2rem;
+        }
+
+        .platform-desc {
+            font-size: 0.7rem;
+            color: #94A3B8;
+            margin-top: 6px;
+        }
+
+        /* قسم مميزات إضافية */
+        .features-banner {
+            background: linear-gradient(110deg, #101826, #0B1320);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin: 2rem 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1rem;
+            border: 1px solid #1E293B;
+        }
+
+        .feature-item {
+            flex: 1;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .feature-item i {
+            font-size: 1.8rem;
+            color: #38BDF8;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .feature-item span {
+            font-weight: 500;
+        }
+
+        /* زر ثانوي */
+        .telegram-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: #1E3A5F;
+            background: linear-gradient(95deg, #1E3A8A, #2563EB);
+            padding: 0.9rem 2rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.15rem;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: white;
+            border: none;
+            margin-top: 0.5rem;
+            width: auto;
+            cursor: pointer;
+        }
+
+        .telegram-button:hover {
+            background: #3B82F6;
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px -8px #1E40AF;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.8rem;
+            color: #64748B;
+            border-top: 1px solid #1E293B;
+            padding-top: 1.8rem;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* استجابة للجوال */
+        @media (max-width: 650px) {
+            h1 {
+                font-size: 1.9rem;
+            }
+            .bot-name {
+                font-size: 1.2rem;
+            }
+            .platform-grid {
+                gap: 1rem;
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            .platform-img {
+                font-size: 3rem;
+            }
+            .hero-section {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="main-wrapper">
+    <!-- قسم البوت الرئيسي @ffmgamebot -->
+    <div class="hero-section">
+        <div class="badge">
+            <i class="fab fa-telegram"></i> بوت تليجرام رسمي • تحميل فوري
+        </div>
+        <h1>حمّل الفيديوهات <br> بدون علامة مائية مطلقًا</h1>
+        <p class="description">
+            فقط أرسل الرابط إلى البوت <strong class="highlight">@ffmgamebot</strong> واستلم الفيديو بجودته الأصلية 📥<br>
+            يدعم جميع المنصات الشهيرة والمحتوى القصير
+        </p>
+
+        <!-- عنصر البوت قابل للنقر يحول إلى تليجرام -->
+        <a href="https://t.me/ffmgamebot" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
+            <div class="bot-card">
+                <div class="bot-icon"><i class="fab fa-telegram-plane"></i></div>
+                <div class="bot-name">@ffmgamebot</div>
+                <div class="bot-hint"><i class="fas fa-external-link-alt"></i> اضغط للذهاب</div>
+            </div>
+        </a>
+        <div style="font-size: 0.75rem; color: #5B7EB3;">✨ انقر على اسم البوت أعلاه لبدء المحادثة فوراً ✨</div>
+    </div>
+
+    <!-- قسم أسماء المنصات مع الصور (أيقونات مميزة لكل منصة) -->
+    <div class="platforms-title">
+        <i class="fas fa-globe"></i>
+        <span>منصات التواصل المدعومة</span>
+        <i class="fas fa-download"></i>
+    </div>
+
+    <div class="platform-grid">
+        <!-- كل بطاقة تحتوي على "صورة" وهي أيقونات ضخمة تمثل المنصة، واسم المنصة -->
+        <div class="platform-card">
+            <div class="platform-img"><i class="fab fa-youtube" style="color: #FF0000;"></i></div>
+            <div class="platform-name">YouTube</div>
+            <div class="platform-desc">فيديوهات قصيرة وطويلة</div>
+        </div>
+        <div class="platform-card">
+            <div class="platform-img"><i class="fab fa-instagram" style="color: #E4405F;"></i></div>
+            <div class="platform-name">Instagram</div>
+            <div class="platform-desc">Reels & Posts</div>
+        </div>
+        <div class="platform-card">
+            <div class="platform-img"><i class="fab fa-tiktok" style="color: #010101; text-shadow: 0 0 3px #69C9D0;"></i></div>
+            <div class="platform-name">TikTok</div>
+            <div class="platform-desc">بدون علامة مائية</div>
+        </div>
+        <div class="platform-card">
+            <div class="platform-img"><i class="fab fa-facebook" style="color: #1877F2;"></i></div>
+            <div class="platform-name">Facebook</div>
+            <div class="platform-desc">فيديوهات & ريلز</div>
+        </div>
+        <div class="platform-card">
+            <div class="platform-img"><i class="fab fa-twitter" style="color: #1DA1F2;"></i></div>
+            <div class="platform-name">Twitter / X</div>
+            <div class="platform-desc">فيديوهات GIF & MP4</div>
+        </div>
+        <div class="platform-card">
+            <div class="platform-img"><i class="fab fa-snapchat" style="color: #FFFC00;"></i></div>
+            <div class="platform-name">Snapchat</div>
+            <div class="platform-desc">سبوت لايت & قصص</div>
+        </div>
+        <div class="platform-card">
+            <div class="platform-img"><i class="fab fa-vimeo" style="color: #1AB7EA;"></i></div>
+            <div class="platform-name">Vimeo</div>
+            <div class="platform-desc">جودة عالية</div>
+        </div>
+        <div class="platform-card">
+            <div class="platform-img"><i class="fab fa-reddit-alien" style="color: #FF4500;"></i></div>
+            <div class="platform-name">Reddit</div>
+            <div class="platform-desc">مقاطع مضمنة</div>
+        </div>
+        <div class="platform-card">
+            <div class="platform-img"><i class="fas fa-link" style="color: #86EFAC;"></i></div>
+            <div class="platform-name">روابط أخري</div>
+            <div class="platform-desc">VK, Dailymotion ..</div>
+        </div>
+    </div>
+
+    <!-- إضافة المزيد من أسماء المنصات بشكل احترافي مع صور (مجموعة ثانية اختيارية) -->
+    <div style="text-align: center; margin-top: -0.5rem;">
+        <span style="background: #1E293B80; padding: 0.3rem 1rem; border-radius: 40px; font-size: 0.75rem;">✓ يدعم أيضاً: Pinterest • Likee • Telegram • Twitch • وكل منصات الفيديو</span>
+    </div>
+
+    <!-- مميزات الخدمة + زر إضافي -->
+    <div class="features-banner">
+        <div class="feature-item"><i class="fas fa-water"></i><span>بدون علامة مائية</span></div>
+        <div class="feature-item"><i class="fas fa-rocket"></i><span>تحميل سريع</span></div>
+        <div class="feature-item"><i class="fas fa-mobile-alt"></i><span>متوافق مع الجوال</span></div>
+        <div class="feature-item"><i class="fas fa-infinity"></i><span>غير محدود</span></div>
+    </div>
+
+    <!-- تعليمات سريعة + رابط البوت مرة أخرى -->
+    <div style="background: rgba(0, 0, 0, 0.3); border-radius: 1.8rem; padding: 1.6rem; margin: 1.2rem 0;">
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between;">
+            <div>
+                <h3 style="display: flex; gap: 8px; margin-bottom: 8px;"><i class="fab fa-telegram" style="color: #2AABEE;"></i> كيف تحصل على الفيديو بدون علامة مائية؟</h3>
+                <ul style="padding-right: 1.5rem; list-style-type: none;">
+                    <li>✅ 1. اضغط على <strong style="color:#7DD3FC;">@ffmgamebot</strong> في الأعلى لفتح التلجرام.</li>
+                    <li>✅ 2. أرسل الأمر /start ثم الصق رابط الفيديو من أي منصة.</li>
+                    <li>✅ 3. استلم الفيديو مباشرة بدون شعارات واحفظه بجودة أصلية!</li>
+                </ul>
+            </div>
+            <a href="https://t.me/ffmgamebot" target="_blank" rel="noopener noreferrer" class="telegram-button">
+                <i class="fab fa-telegram"></i> افتح البوت الآن
+                <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><i class="fas fa-robot"></i> البوت الرسمي <strong>@ffmgamebot</strong> • تنزيل فيديوهات من السوشيال ميديا بدون علامة مائية وبجودة عالية</p>
+        <p style="margin-top: 0.5rem;">جميع المنصات المدعومة: YouTube, Instagram, TikTok, Facebook, Twitter, Snapchat, Vimeo, Reddit والمزيد</p>
+    </div>
+</div>
+
+<!-- سكريبت خفيف للتأكد من فتح الروابط في نافذة جديدة (اختياري) -->
+<script>
+    (function() {
+        // التأكد من أن جميع روابط التليجرام تفتح بشكل آمن
+        const tgLinks = document.querySelectorAll('a[href*="t.me/ffmgamebot"]');
+        tgLinks.forEach(link => {
+            link.setAttribute('target', '_blank');
+            link.setAttribute('rel', 'noopener noreferrer');
+        });
+        // إضافة تأثير بسيط عند النقر على البطاقات (ليست روابط لكن تبقى فاخرة)
+        console.log("صفحة تحميل فيديوهات بدون علامة مائية - FFMG Bot");
+    })();
+</script>
+</body>
+  </html>
