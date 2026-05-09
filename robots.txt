@@ -1,1 +1,17 @@
+# robots.txt لموقع تحميل الفيديوهات والبوت @ffmgamebot
+# يسمح لجميع الروبوتات بزحف كامل المحتوى
 
+User-agent: *
+Allow: /
+
+# منع الزحف إلى مجلدات أو صفحات غير مرغوب فيها (في حال وجودها)
+Disallow: /cgi-bin/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+
+# خريطة الموقع (اختياري - استبدل الرابط برابط Sitemap الفعلي إن وجد)
+Sitemap: https://yourdomain.com/sitemap.xml
+
+# تأخير الزحف لتقليل الضغط على الخادم (اختياري)
+Crawl-delay: 1
